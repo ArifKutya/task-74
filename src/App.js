@@ -1,11 +1,21 @@
 import "./App.css";
 import { useMemo, useState } from "react";
-
+import { validNumber } from "./Regex";
 
 
 function App() {
-  const [number, setNumber] = useState("");
-  const valid = useMemo(() => valid(number), [number]);
+  const [text, setText] = useState("");
+  const [textErr, setTextErr] = useState(false);
+  const validate = useMemo(() => {
+    if (!validNumber.test(text)) {
+      setTextErr(true);
+    }
+  }, [text]);
+  function changeClass() {
+    if (validate === true) {
+      document.getElementById("MyElement").className = "fas fa-check"
+    }
+  }
   return (
     <div className="App">
       <div className="control has-icons-right">
@@ -13,18 +23,21 @@ function App() {
           <input
             className="input is-large"
             type="text"
-            value={number}
+            value={text}
             onChange={(e) => {
-              setNumber(e.target.value)
+              setText(e.target.value);
             }}
             placeholder="Enter number..."
           />
-          <p>NUmber: {number}</p>
+          <div>
+            <p>{textErr && <p>Your text is number</p>}</p>
+          </div>
+          <div>
+          </div>
         </form>
         <span className="icon is-small is-right">
-          <i className="fas fa-times" id="MyElement" />
+          <i className="fas fa-times" id="MyElement" onChange={changeClass} />
         </span>
-        <button onClick={valid}>Check</button>
       </div>
     </div>
 
@@ -37,6 +50,5 @@ function App() {
   // }
 
 }
-
 
 export default App;
