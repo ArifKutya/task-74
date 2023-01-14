@@ -1,1 +1,1 @@
-export const validNumber = new RegExp('d+/d+');
+export const validNumber = new RegExp('/d+/');
